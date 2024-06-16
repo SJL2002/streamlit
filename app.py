@@ -103,7 +103,7 @@ else:
             elif probability > 50:
                 st.write("Based on the prediction, it is advised to have a check-up.")
             elif probability >= 40:
-                st.write("Based on the prediction, it is probably fine.")
+                st.write("Based on the prediction, it is probably fine but having a check up would not hurt.")
             else:
                 st.write("Based on the prediction, there are likely no problems.")
 
