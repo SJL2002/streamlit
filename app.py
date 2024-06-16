@@ -63,64 +63,65 @@ else:
     if 'probability' not in st.session_state:
         st.session_state.probability = None
 
-    # Page: Input
-    if st.session_state.page == 'input':
-        st.title('Stroke Probability Prediction')
-        st.write('This app predicts the probability of stroke based on input features.')
+    def main():
+        # Page: Input
+        if st.session_state.page == 'input':
+            st.title('Stroke Probability Prediction')
+            st.write('This app predicts the probability of stroke based on input features.')
 
-        # Input fields for user input
-        gender = st.selectbox('Gender', ['Male', 'Female'])
-        age = st.slider('Age', 0, 150, 50)
-        hypertension = st.checkbox('Hypertension')
-        heart_disease = st.checkbox('Heart Disease')
-        work_type = st.selectbox('Work Type', ['Private', 'Self-employed', 'Govt_job', 'children'])
-        residence_type = st.selectbox('Residence Type', ['Urban', 'Rural'])
-        avg_glucose_level = st.number_input('Average Glucose Level', min_value=50.0, max_value=500.0, value=100.0, step=0.1)
-        bmi = st.number_input('BMI', min_value=10.0, max_value=60.0, value=25.0, step=0.1)
-        smoking_status = st.selectbox('Smoking Status', ['formerly smoked', 'never smoked', 'smokes'])
+            # Input fields for user input
+            gender = st.selectbox('Gender', ['Male', 'Female'])
+            age = st.slider('Age', 0, 150, 50)
+            hypertension = st.checkbox('Hypertension')
+            heart_disease = st.checkbox('Heart Disease')
+            work_type = st.selectbox('Work Type', ['Private', 'Self-employed', 'Govt_job', 'children'])
+            residence_type = st.selectbox('Residence Type', ['Urban', 'Rural'])
+            avg_glucose_level = st.number_input('Average Glucose Level', min_value=50.0, max_value=500.0, value=100.0, step=0.1)
+            bmi = st.number_input('BMI', min_value=10.0, max_value=60.0, value=25.0, step=0.1)
+            smoking_status = st.selectbox('Smoking Status', ['formerly smoked', 'never smoked', 'smokes'])
 
-        residence_num = 1 if residence_type == 'Urban' else 0
-        gender_num = 1 if gender == 'Male' else 0
+            residence_num = 1 if residence_type == 'Urban' else 0
+            gender_num = 1 if gender == 'Male' else 0
 
-        # Predict stroke probability when 'Predict' button is clicked
-        if st.button('Predict'):
-            probability = predict_stroke_probability(gender_num, age, hypertension, heart_disease, work_type, residence_num,
-                                                     avg_glucose_level, bmi, smoking_status)
+            # Predict stroke probability when 'Predict' button is clicked
+            if st.button('Predict'):
+                probability = predict_stroke_probability(gender_num, age, hypertension, heart_disease, work_type, residence_num,
+                                                        avg_glucose_level, bmi, smoking_status)
 
-            st.session_state.probability = probability
-            st.session_state.page = 'result'
-            st.experimental_rerun()
+                st.session_state.probability = probability
+                st.session_state.page = 'result'
+                st.experimental_rerun()
 
-    # Page: Result
-    elif st.session_state.page == 'result':
-        probability = st.session_state.probability
-        st.write(f'Probability of stroke: {probability:.2f}%')  # Display probability as percentage
+        # Page: Result
+        elif st.session_state.page == 'result':
+            probability = st.session_state.probability
+            st.write(f'Probability of stroke: {probability:.2f}%')  # Display probability as percentage
 
-        # Provide advice based on probability
-        if probability > 70:
-            st.write("Based on the prediction, it is advised to seek medical attention.")
-        elif probability > 50:
-            st.write("Based on the prediction, it is advised to have a check-up.")
-        elif probability >= 40:
-            st.write("Based on the prediction, it is probably fine.")
-        else:
-            st.write("Based on the prediction, there are likely no problems.")
+            # Provide advice based on probability
+            if probability > 70:
+                st.write("Based on the prediction, it is advised to seek medical attention.")
+            elif probability > 50:
+                st.write("Based on the prediction, it is advised to have a check-up.")
+            elif probability >= 40:
+                st.write("Based on the prediction, it is probably fine.")
+            else:
+                st.write("Based on the prediction, there are likely no problems.")
 
-        st.write("### Was this result correct?")
-        if st.button('Yes'):
-            st.session_state.page = 'feedback'
-            st.experimental_rerun()
-        if st.button('No'):
-            st.session_state.page = 'feedback'
-            st.experimental_rerun()
+            st.write("### Was this result correct?")
+            if st.button('Yes'):
+                st.session_state.page = 'feedback'
+                st.experimental_rerun()
+            if st.button('No'):
+                st.session_state.page = 'feedback'
+                st.experimental_rerun()
 
-    # Page: Feedback
-    elif st.session_state.page == 'feedback':
-        st.write("Thank you for your feedback!")
-        if st.button('Go back to input'):
-            st.session_state.page = 'input'
-            st.experimental_rerun()
+        # Page: Feedback
+        elif st.session_state.page == 'feedback':
+            st.write("Thank you for your feedback!")
+            if st.button('Go back to input'):
+                st.session_state.page = 'input'
+                st.experimental_rerun()
 
-# Run the app
-if __name__ == '__main__':
-    main()
+    # Run the app
+    if __name__ == '__main__':
+        main()
