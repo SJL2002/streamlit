@@ -8,7 +8,6 @@ from lightgbm import LGBMClassifier
 # Load the LightGBM model using pickle
 model_path = 'models/lgbmodel.pkl'
 
-# Ensure the model path exists
 if not os.path.exists(model_path):
     st.error(f"Model file not found: {model_path}")
 else:
@@ -58,8 +57,14 @@ else:
 
         return probability[0]
 
-    # Streamlit app begins
-    def main():
+    # Initialize session state variables
+    if 'page' not in st.session_state:
+        st.session_state.page = 'input'
+    if 'probability' not in st.session_state:
+        st.session_state.probability = None
+
+    # Page: Input
+    if st.session_state.page == 'input':
         st.title('Stroke Probability Prediction')
         st.write('This app predicts the probability of stroke based on input features.')
 
@@ -82,18 +87,40 @@ else:
             probability = predict_stroke_probability(gender_num, age, hypertension, heart_disease, work_type, residence_num,
                                                      avg_glucose_level, bmi, smoking_status)
 
-            st.write(f'Probability of stroke: {probability:.2f}%')  # Display probability as percentage
+            st.session_state.probability = probability
+            st.session_state.page = 'result'
+            st.experimental_rerun()
 
-            # Provide advice based on probability
-            if probability > 70:
-                st.write("Based on the prediction, it is advised to seek medical attention.")
-            elif probability > 50:
-                st.write("Based on the prediction, it is advised to have a check-up.")
-            elif probability >= 40:
-                st.write("Based on the prediction, it is probably fine.")
-            else:
-                st.write("Based on the prediction, there are likely no problems.")
+    # Page: Result
+    elif st.session_state.page == 'result':
+        probability = st.session_state.probability
+        st.write(f'Probability of stroke: {probability:.2f}%')  # Display probability as percentage
 
-    # Run the app
-    if __name__ == '__main__':
-        main()
+        # Provide advice based on probability
+        if probability > 70:
+            st.write("Based on the prediction, it is advised to seek medical attention.")
+        elif probability > 50:
+            st.write("Based on the prediction, it is advised to have a check-up.")
+        elif probability >= 40:
+            st.write("Based on the prediction, it is probably fine.")
+        else:
+            st.write("Based on the prediction, there are likely no problems.")
+
+        st.write("### Was this result correct?")
+        if st.button('Yes'):
+            st.session_state.page = 'feedback'
+            st.experimental_rerun()
+        if st.button('No'):
+            st.session_state.page = 'feedback'
+            st.experimental_rerun()
+
+    # Page: Feedback
+    elif st.session_state.page == 'feedback':
+        st.write("Thank you for your feedback!")
+        if st.button('Go back to input'):
+            st.session_state.page = 'input'
+            st.experimental_rerun()
+
+# Run the app
+if __name__ == '__main__':
+    main()
