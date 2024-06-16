@@ -1,11 +1,12 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import joblib
+import pickle
 from lightgbm import LGBMClassifier
 
-# Load the LightGBM model
-model = joblib.load('models/lgbmodel.pkl')
+# Load the LightGBM model using pickle
+with open('models/lgbmodel.pkl', 'rb') as f:
+    model = pickle.load(f)
 
 # Function to preprocess data and predict stroke probability
 def predict_stroke_probability(gender, age, hypertension, heart_disease, work_type, residence_type,
