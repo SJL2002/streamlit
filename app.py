@@ -5,7 +5,7 @@ import joblib
 from lightgbm import LGBMClassifier
 
 # Load the LightGBM model
-model = joblib.load('lgbmodel.pkl')
+model = joblib.load('models/lgbmodel.pkl')
 
 # Function to preprocess data and predict stroke probability
 def predict_stroke_probability(gender, age, hypertension, heart_disease, work_type, residence_type,
