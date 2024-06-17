@@ -99,16 +99,6 @@ else:
             probability = st.session_state.probability
             st.write(f'Probability of stroke: {probability:.2f}%')  # Display probability as percentage
 
-            # Provide advice based on probability
-            if probability > 70:
-                st.write("Based on the prediction, it is advised to seek medical attention.")
-            elif probability > 50:
-                st.write("Based on the prediction, it is advised to have a check-up.")
-            elif probability >= 40:
-                st.write("Based on the prediction, it is probably fine but having a check up would not hurt.")
-            else:
-                st.write("Based on the prediction, there are likely no problems.")
-
             st.write("### Was this result correct?")
             if st.button('Yes'):
                 st.session_state.page = 'feedback'
