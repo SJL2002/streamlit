@@ -72,7 +72,9 @@ else:
             # Input fields for user input
             gender = st.selectbox('Gender', ['Male', 'Female'])
             age = st.slider('Age', 0, 150, 50)
+            st.write('Check the box if you have Hypertension')
             hypertension = st.checkbox('Hypertension')
+            st.write('Check the box if you have a Heart Disease')
             heart_disease = st.checkbox('Heart Disease')
             work_type = st.selectbox('Work Type', ['Private', 'Self-employed', 'Govt_job', 'children'])
             residence_type = st.selectbox('Residence Type', ['Urban', 'Rural'])
