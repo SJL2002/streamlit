@@ -5,7 +5,6 @@ import pickle
 import os
 from lightgbm import LGBMClassifier
 
-# Load the LightGBM model using pickle
 model_path = 'models/lgbmodel.pkl'
 
 if not os.path.exists(model_path):
@@ -15,7 +14,7 @@ else:
         model = pickle.load(f)
 
     # Function to preprocess data and predict stroke probability
-    def predict_stroke_probability(gender, age, hypertension, heart_disease, work_type, residence_type,
+    def predict_stroke_probability(gender, age, hypertension, heart_disease, ever_married, work_type, residence_type,
                                     avg_glucose_level, bmi, smoking_status):
         # Convert categorical variables to numeric using one-hot encoding
         work_types = ['Private', 'Self-employed', 'Govt_job', 'children', 'Never_worked']
@@ -30,6 +29,7 @@ else:
             'age': [age],
             'hypertension': [hypertension],
             'heart_disease': [heart_disease],
+            'ever_married': [ever_married],
             'Residence_type': [residence_type],
             'avg_glucose_level': [avg_glucose_level],
             'bmi': [bmi],
@@ -43,21 +43,17 @@ else:
         })
 
         # Select only the features used during model training
-        features_used = ['gender', 'age', 'hypertension', 'heart_disease', 'Residence_type',
+        features_used = ['gender', 'age', 'hypertension', 'heart_disease', 'ever_married', 'Residence_type',
                          'avg_glucose_level', 'bmi', 'work_type_Private', 'smoking_status_formerly smoked']
 
-        # Filter input data to include only the required features
         data = data[features_used]
 
-        # Make prediction
         probability = model.predict_proba(data)[:, 1]  # Probability of stroke (class 1)
         
-        # Multiply probability by 100
         probability *= 100
 
         return probability[0]
 
-    # Initialize session state variables
     if 'page' not in st.session_state:
         st.session_state.page = 'input'
     if 'probability' not in st.session_state:
@@ -76,6 +72,7 @@ else:
             hypertension = st.checkbox('Hypertension')
             st.write('Check the box if you have a Heart Disease')
             heart_disease = st.checkbox('Heart Disease')
+            ever_married = st.selectbox('Ever Married', ['Yes', 'No'])
             work_type = st.selectbox('Work Type', ['Private', 'Self-employed', 'Govt_job', 'children'])
             residence_type = st.selectbox('Residence Type', ['Urban', 'Rural'])
             avg_glucose_level = st.number_input('Average Glucose Level', min_value=50.0, max_value=500.0, value=100.0, step=0.1)
@@ -84,10 +81,10 @@ else:
 
             residence_num = 1 if residence_type == 'Urban' else 0
             gender_num = 1 if gender == 'Male' else 0
+            ever_married_num = 1 if ever_married == 'Yes' else 0
 
-            # Predict stroke probability when 'Predict' button is clicked
             if st.button('Predict'):
-                probability = predict_stroke_probability(gender_num, age, hypertension, heart_disease, work_type, residence_num,
+                probability = predict_stroke_probability(gender_num, age, hypertension, heart_disease, ever_married_num, work_type, residence_num,
                                                         avg_glucose_level, bmi, smoking_status)
 
                 st.session_state.probability = probability
