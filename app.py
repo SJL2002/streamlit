@@ -45,7 +45,7 @@ else:
 
         # Select only the features used during model training
         features_used = ['gender', 'age', 'hypertension', 'heart_disease', 'ever_married', 'Residence_type',
-                         'avg_glucose_level', 'bmi', 'work_type_Private', 'smoking_status]
+                         'avg_glucose_level', 'bmi', 'work_type_Private', 'smoking_status_formerly smoked']
 
         # Filter input data to include only the required features
         data = data[features_used]
