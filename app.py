@@ -14,7 +14,7 @@ else:
         model = pickle.load(f)
 
     # Function to preprocess data and predict stroke probability
-    def predict_stroke_probability(gender, age, hypertension, heart_disease, ever_married, work_type, residence_type,
+    def predict_stroke_probability(gender, age, hypertension, heart_disease, work_type, residence_type,
                                     avg_glucose_level, bmi, smoking_status):
         # Convert categorical variables to numeric using one-hot encoding
         work_types = ['Private', 'Self-employed', 'Govt_job', 'children', 'Never_worked']
@@ -29,7 +29,6 @@ else:
             'age': [age],
             'hypertension': [hypertension],
             'heart_disease': [heart_disease],
-            'ever_married': [ever_married],
             'Residence_type': [residence_type],
             'avg_glucose_level': [avg_glucose_level],
             'bmi': [bmi],
@@ -43,7 +42,7 @@ else:
         })
 
         # Select only the features used during model training
-        features_used = ['gender', 'age', 'hypertension', 'heart_disease', 'ever_married', 'Residence_type',
+        features_used = ['gender', 'age', 'hypertension', 'heart_disease', 'Residence_type',
                          'avg_glucose_level', 'bmi', 'work_type_Private', 'smoking_status_formerly smoked']
 
         data = data[features_used]
@@ -70,8 +69,6 @@ else:
             age = st.slider('Age', 0, 150, 50)
             st.write('Check the box if you have Hypertension')
             hypertension = st.checkbox('Hypertension')
-            st.write('Check the box if you have a Heart Disease')
-            heart_disease = st.checkbox('Heart Disease')
             st.write('Check the box if you ever been Married')
             ever_married = st.checkbox('Ever Married')
             work_type = st.selectbox('Work Type', ['Private', 'Self-employed', 'Govt_job', 'children'])
@@ -84,7 +81,7 @@ else:
             gender_num = 1 if gender == 'Male' else 0
 
             if st.button('Predict'):
-                probability = predict_stroke_probability(gender_num, age, hypertension, heart_disease, ever_married, work_type, residence_num,
+                probability = predict_stroke_probability(gender_num, age, hypertension, heart_disease, work_type, residence_num,
                                                         avg_glucose_level, bmi, smoking_status)
 
                 st.session_state.probability = probability
