@@ -52,6 +52,9 @@ else:
 
         data = data[features_used]
 
+        # Ensure the data types are consistent with the training data
+        data = data.astype(float)
+
         # Make prediction
         probability = model.predict_proba(data)[:, 1]  # Probability of stroke (class 1)
         
