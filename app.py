@@ -84,7 +84,7 @@ else:
             gender_num = 1 if gender == 'Male' else 0
 
             if st.button('Predict'):
-                probability = predict_stroke_probability(gender_num, age, hypertension, heart_disease, ever_married_num, work_type, residence_num,
+                probability = predict_stroke_probability(gender_num, age, hypertension, heart_disease, ever_married, work_type, residence_num,
                                                         avg_glucose_level, bmi, smoking_status)
 
                 st.session_state.probability = probability
