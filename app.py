@@ -19,7 +19,7 @@ else:
                                     avg_glucose_level, bmi, smoking_status):
         # Convert categorical variables to numeric using one-hot encoding
         work_types = ['Private', 'Self-employed', 'Govt_job', 'children', 'Never_worked']
-        smoking_statuses = ['formerly smoked', 'never smoked', 'smokes', 'Unknown']
+        smoking_statuses = ['formerly smoked', 'never smoked', 'smokes']
 
         work_type_encoded = [1 if work_type == wt else 0 for wt in work_types]
         smoking_status_encoded = [1 if smoking_status == ss else 0 for ss in smoking_statuses]
@@ -45,7 +45,7 @@ else:
 
         # Select only the features used during model training
         features_used = ['gender', 'age', 'hypertension', 'heart_disease', 'ever_married', 'Residence_type',
-                         'avg_glucose_level', 'bmi', 'work_type_Private', 'smoking_status_formerly smoked']
+                         'avg_glucose_level', 'bmi', 'work_type_Private', 'smoking_status]
 
         # Filter input data to include only the required features
         data = data[features_used]
