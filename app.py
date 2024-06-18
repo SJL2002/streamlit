@@ -78,7 +78,10 @@ else:
                 st.session_state.probability = probability
                 st.session_state.page = 'result'
                 st.experimental_rerun()
-
+        # Page: Result
+        elif st.session_state.page == 'result':
+            probability = st.session_state.probability
+            st.write(f'Probability of stroke: {probability:.2f}%')  # Display probability as percentage
             st.write("### Was this result correct?")
             if st.button('Yes'):
                 st.session_state.page = 'feedback'
