@@ -48,7 +48,7 @@ else:
                          'avg_glucose_level', 'bmi', 'work_type_Private', 'work_type_Self-employed',
                          'work_type_Govt_job', 'work_type_children', 'work_type_Never_worked',
                          'smoking_status_formerly smoked', 'smoking_status_never smoked', 
-                         'smoking_status_smokes', 'smoking_status_Unknown']
+                         'smoking_status_smokes']
 
         data = data[features_used]
 
@@ -82,7 +82,7 @@ else:
             residence_type = st.selectbox('Residence Type', ['Urban', 'Rural'])
             avg_glucose_level = st.number_input('Average Glucose Level', min_value=50.0, max_value=500.0, value=100.0, step=0.1)
             bmi = st.number_input('BMI', min_value=10.0, max_value=60.0, value=25.0, step=0.1)
-            smoking_status = st.selectbox('Smoking Status', ['formerly smoked', 'never smoked', 'smokes', 'Unknown'])
+            smoking_status = st.selectbox('Smoking Status', ['formerly smoked', 'never smoked', 'smokes'])
 
             residence_num = 1 if residence_type == 'Urban' else 0
             gender_num = 1 if gender == 'Male' else 0
