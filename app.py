@@ -51,7 +51,7 @@ else:
         data = data[features_used]
 
         # Make prediction
-        probability = model.predict_proba(data)[:, 1]  # Probability of stroke (class 1)
+        probability = model.predict_proba(data)[:, [0,1,2,3,4,5,6,7,8,9]]  # Probability of stroke (class 1)
         
         # Multiply probability by 100
         probability *= 100
