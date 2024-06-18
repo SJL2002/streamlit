@@ -72,7 +72,8 @@ else:
             hypertension = st.checkbox('Hypertension')
             st.write('Check the box if you have a Heart Disease')
             heart_disease = st.checkbox('Heart Disease')
-            ever_married = st.selectbox('Ever Married', ['Yes', 'No'])
+            st.write('Check the box if you ever been Married')
+            ever_married = st.checkbox('Ever Married')
             work_type = st.selectbox('Work Type', ['Private', 'Self-employed', 'Govt_job', 'children'])
             residence_type = st.selectbox('Residence Type', ['Urban', 'Rural'])
             avg_glucose_level = st.number_input('Average Glucose Level', min_value=50.0, max_value=500.0, value=100.0, step=0.1)
@@ -81,7 +82,6 @@ else:
 
             residence_num = 1 if residence_type == 'Urban' else 0
             gender_num = 1 if gender == 'Male' else 0
-            ever_married_num = 1 if ever_married == 'Yes' else 0
 
             if st.button('Predict'):
                 probability = predict_stroke_probability(gender_num, age, hypertension, heart_disease, ever_married_num, work_type, residence_num,
